@@ -1,6 +1,0 @@
-CREATE DATABASE cddb;
-CREATE USER cduser WITH PASSWORD 'p@&&vv0rd';
-ALTER ROLE cduser SET client_encoding TO 'utf8';
-ALTER ROLE cduser SET default_transaction_isolation TO 'read committed';
-ALTER ROLE cduser SET timezone TO 'UTC';
-GRANT ALL PRIVILEGES ON DATABASE cddb TO cduser;
