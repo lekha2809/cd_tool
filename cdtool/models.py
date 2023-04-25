@@ -76,3 +76,39 @@ class Service(models.Model):
 
     def get_rsyslog_tag(self, env):
         return '%s_%s' % (self.name, env)
+    
+
+class DeployEnvironment(models.Model):
+    name = models.CharField(max_length=255)
+    app_env = models.CharField(max_length=255)
+    swarm_manager = models.CharField(max_length=255)
+    more_info = YAMLField(null=True)
+
+    def __str__(self):
+        return self.name
+
+    def get_docker_host(self):
+        return self.swarm_manager
+
+    def get_node_env_environment(self):
+        return self.app_env
+
+    def get_rsys_log_address_docker(self):
+        return self.more_info['log_docker']
+
+    def get_rsys_log_address_nginx(self):
+        return self.more_info['log_nginx']
+
+    def get_dns_list(self):
+        return self.more_info['dns']
+
+    def send_slack(self):
+        if 'send_slack' in self.more_info:
+            return self.more_info['send_slack']
+        else:
+            return False
+
+class ActiveServiceOnEnv(models.Model):
+    service = models.ForeignKey(Service)
+    env = models.ForeignKey(DeployEnvironment)
+    active = models.BooleanField(blank=True, default=False)

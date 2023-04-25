@@ -113,6 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Default in JSON formatter
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
